@@ -5,6 +5,7 @@ from multiprocessing import Process
 from queue import Queue
 import time
 import json
+from concurrent.futures import ThreadPoolExecutor, Executor
 
 data_home = "/home/vila/Project/YoutubeAPI/YoutubeUser/data"
 
@@ -59,8 +60,23 @@ def save_to_file(filePath, content):
     :param content:
     :return:
     """
-    with open(filePath, "w") as f:
+    with open(filePath, "wt", encoding="utf-8") as f:
         f.write(content)
+
+def download_subtitle(channelId, videoId, lang):
+    """
+
+    :param videoId:
+    :param lang:
+    :param savingPath:
+    :return:
+    """
+    lines = load_subtitle(videoId, lang)
+    if lines:
+        content = json.dumps(lines, ensure_ascii=False)
+        savingPath = ("%s/%s/subtitles/%s/%s.txt" % (data_home, channelId, lang, videoId))
+        save_to_file(savingPath, content)
+
 
 def get_videos_id(channelId):
     """
@@ -77,21 +93,29 @@ def get_videos_id(channelId):
                 ids.append(item["id"]["videoId"])
     return ids
 
-
-def multi_download_subtitles(channelId):
+def multi_download_subtitles(channelId, lang):
     """
 
     :param channelId:
     :return:
     """
 
+    ids = get_videos_id(channelId)
+    queue = Queue(1000)
+    for i in ids:
+        queue.put(i)
 
-
+    with ThreadPoolExecutor(max_workers=100) as executor:
+        while not queue.empty():
+            videoId = queue.get()
+            executor.submit(download_subtitle, channelId, videoId, lang)
+            print("=== JOB SUBMITTED ===")
 
 if __name__=="__main__":
 
-    channelId = "UCsZXuHKonP9utl5q2hFCkgA"
-    ids = get_videos_id(channelId)
+    channelId = "UCsooa4yRKGN_zEE8iknghZA"
+    lang = "vi"
 
-    print(ids)
-    print(len(ids))
+    multi_download_subtitles(channelId, lang)
+
+

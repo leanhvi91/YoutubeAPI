@@ -40,7 +40,6 @@ def get_channel_videos(querystring, filePath):
         'postman-token': "a7befa87-43cd-82f5-4ad2-ddab7f986f16"
     }
 
-
     response = requests.request("GET", url, headers=headers, params=querystring)
     if not response.ok:
         return
