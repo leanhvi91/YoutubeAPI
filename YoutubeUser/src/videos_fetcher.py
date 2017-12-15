@@ -74,7 +74,7 @@ if __name__=="__main__":
 
     items = []
 
-    channelId = "UCsZXuHKonP9utl5q2hFCkgA"
+    channelId = "UCJsSEDFFnMFvW9JWU6XUn0Q"
     key = "AIzaSyCVB2uxo0LC52PuOdb_yPKH_bMz1d3mPJU",
     querystring = {
         "channelId": channelId,

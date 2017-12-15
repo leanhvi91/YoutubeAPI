@@ -111,11 +111,28 @@ def multi_download_subtitles(channelId, lang):
             executor.submit(download_subtitle, channelId, videoId, lang)
             print("=== JOB SUBMITTED ===")
 
+def export_ids(channelId, channelName):
+    ids = get_videos_id(channelId)
+    filePath = ("%s/%s.js" % (data_home, channelName))
+    content = ("%s_id = [" % channelName)
+    start = True
+    for i in ids:
+        if start:
+            start = False
+        else:
+            content += ", "
+        content += ("'%s'" % i)
+    content += "]"
+    with open(filePath, "w") as f:
+        f.write(content)
+
+
 if __name__=="__main__":
 
-    channelId = "UCsooa4yRKGN_zEE8iknghZA"
-    lang = "vi"
+    channelId = "UCJsSEDFFnMFvW9JWU6XUn0Q"
+    channelName = "stories"
+    export_ids(channelId, channelName)
 
-    multi_download_subtitles(channelId, lang)
+    # multi_download_subtitles(channelId, "en")
 
 
