@@ -113,7 +113,7 @@ def multi_download_subtitles(channelId, lang):
 
 if __name__=="__main__":
 
-    channelId = "UCsooa4yRKGN_zEE8iknghZA"
+    channelId = "UCwmZiChSryoWQCZMIQezgTg"
     lang = "vi"
 
     multi_download_subtitles(channelId, lang)

@@ -1,7 +1,7 @@
 import requests
 import json
 
-data_home = "/home/vila/Project/YoutubeAPI/YoutubeUser/data"
+data_home = "/home/levi/projects/YoutubeAPI/YoutubeUser/data"
 
 url = "https://www.googleapis.com/youtube/v3/search"
 
@@ -74,7 +74,7 @@ if __name__=="__main__":
 
     items = []
 
-    channelId = "UCsZXuHKonP9utl5q2hFCkgA"
+    channelId = "UCzR-rom72PHN9Zg7RML9EbA"
     key = "AIzaSyCVB2uxo0LC52PuOdb_yPKH_bMz1d3mPJU",
     querystring = {
         "channelId": channelId,
