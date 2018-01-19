@@ -74,12 +74,10 @@ if __name__=="__main__":
 
     items = []
 
-<<<<<<< HEAD
     channelId = "UCzR-rom72PHN9Zg7RML9EbA"
-=======
-    channelId = "UCJsSEDFFnMFvW9JWU6XUn0Q"
->>>>>>> 425da2454c88f9bebdf94429e61817ebf9fba10e
-    key = "AIzaSyCVB2uxo0LC52PuOdb_yPKH_bMz1d3mPJU",
+
+    key = "AIzaSyCVB2uxo0LC52PuOdb_yPKH_bMz1d3mPJU"
+
     querystring = {
         "channelId": channelId,
         "part": "snippet",
