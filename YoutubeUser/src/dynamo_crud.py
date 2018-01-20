@@ -37,6 +37,21 @@ def put_item(item, table):
     print("PutItem succeeded:")
     print(json.dumps(response, indent=4, cls=DecimalEncoder))
 
+def batch_put_items(items, table):
+    """
+
+    :param items: list of item to be put to dynamodb
+    :param table: table name
+    :return:
+    """
+    __table = dynamodb.Table(table)
+
+    with __table.batch_writer() as batch:
+        for item in items:
+            batch.put_item(Item=item)
+
+
+
 
 def get_item(key, table):
     """
@@ -78,8 +93,9 @@ def delete_item(key, table):
 
 MIN_DATE = 0
 MAX_DATE = 32503662063
+MAX_ITEMS = 100
 
-def list_videos(channelId, fromDate=MIN_DATE, toDate= MAX_DATE):
+def list_videos(channelId, fromDate=MIN_DATE, toDate= MAX_DATE, maxItems=MAX_ITEMS):
     """
 
     :return:
@@ -89,6 +105,7 @@ def list_videos(channelId, fromDate=MIN_DATE, toDate= MAX_DATE):
 
     response = __table.query(
         IndexName="ChannelId-PublishedAt-index",
+        Limit=min(maxItems, MAX_ITEMS),
         KeyConditionExpression= "ChannelId = :v1 AND PublishedAt BETWEEN :v2a AND :v2b",
         ExpressionAttributeValues = {
                 ":v1": channelId,
@@ -97,10 +114,9 @@ def list_videos(channelId, fromDate=MIN_DATE, toDate= MAX_DATE):
             }
     )
 
-    for item in response['Items']:
-        print(item)
+    return response
 
-def list_videos_by_date(channelId, Y1=1970, M1=1, D1=1, Y2=3000, M2=1, D2=1):
+def list_videos_by_date(channelId, Y1=1970, M1=1, D1=1, Y2=3000, M2=1, D2=1, maxItems=MAX_ITEMS):
     """
 
     :param channelId:
@@ -114,7 +130,7 @@ def list_videos_by_date(channelId, Y1=1970, M1=1, D1=1, Y2=3000, M2=1, D2=1):
     """
     fromDate = int(datetime.datetime(Y1, M1, D1).timestamp())
     toDate = int(datetime.datetime(Y2, M2, D2).timestamp())
-    list_videos(channelId=channelId, fromDate=fromDate, toDate=toDate)
+    return list_videos(channelId=channelId, fromDate=fromDate, toDate=toDate, maxItems=maxItems)
 
 if __name__ == "__main__":
     # item = {
@@ -124,12 +140,32 @@ if __name__ == "__main__":
     # }
     # put_item(item=item, table="Videos")
 
-    key = {
-        'VideoId': "video_18"
-    }
+    # key = {
+    #     'VideoId': "video_18"
+    # }
     # get_item(key=key, table="Videos")
     # delete_item(key=key, table="Videos")
 
-    list_videos_by_date(channelId="channel_02", Y1=1970, Y2=2016)
+    #
+    # items = []
+    #
+    # for i in range(200):
+    #     video_id = i
+    #     channel_id = i % 10
+    #     day = i % 29 + 1
+    #     published_at = int(datetime.datetime(2018, 1, day).timestamp())
+    #     item = {
+    #         "VideoId": ("video_%s" % video_id),
+    #         "ChannelId":("channel_%s" % channel_id),
+    #         "PublishedAt": published_at
+    #     }
+    #     items.append(item)
+    #
+    # batch_put_items(items=items, table="Videos")
 
 
+    res = list_videos_by_date(channelId="UCwmZiChSryoWQCZMIQezgTg", Y1=2016, Y2=2018, maxItems=5)
+
+    txt = json.dumps(res, indent=2, cls=DecimalEncoder)
+
+    print(txt)

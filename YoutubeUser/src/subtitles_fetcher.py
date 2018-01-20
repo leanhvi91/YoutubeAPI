@@ -129,14 +129,10 @@ def export_ids(channelId, channelName):
 
 if __name__=="__main__":
 
-<<<<<<< HEAD
-    channelId = "UCwmZiChSryoWQCZMIQezgTg"
-    lang = "vi"
-=======
+
     channelId = "UCJsSEDFFnMFvW9JWU6XUn0Q"
     channelName = "stories"
     export_ids(channelId, channelName)
->>>>>>> 425da2454c88f9bebdf94429e61817ebf9fba10e
 
     # multi_download_subtitles(channelId, "en")
 
