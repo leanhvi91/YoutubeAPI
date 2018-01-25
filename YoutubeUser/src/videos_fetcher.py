@@ -150,7 +150,8 @@ if __name__=="__main__":
 
     ids = ["UC6E2mP01ZLH_kbAyeazCNdg", "UC08wrceRCWhajGG4udhETww", "UCd_vju15XYyTXgL-S3_2HtA",
            "UCd_vju15XYyTXgL-S3_2HtA", "UCJsSEDFFnMFvW9JWU6XUn0Q", "UCkEBDbzLyH-LbB2FgMoSMaQ",
-           "UCvJiYiBUbw4tmpRSZT2r1Hw", "UCwmZiChSryoWQCZMIQezgTg", "UCzR-rom72PHN9Zg7RML9EbA", "UCzWQYUVCpZqtN93H8RR44Qw"]
+           "UCvJiYiBUbw4tmpRSZT2r1Hw", "UCwmZiChSryoWQCZMIQezgTg", "UCzR-rom72PHN9Zg7RML9EbA",
+           "UCzWQYUVCpZqtN93H8RR44Qw"]
 
     items = get_channel_info(ids=ids)
     filePath = "/home/vila/projects/YoutubeAPI/YoutubeUser/data/channels.txt"
